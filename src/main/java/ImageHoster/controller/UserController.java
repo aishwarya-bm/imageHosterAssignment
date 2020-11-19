@@ -39,10 +39,61 @@ public class UserController {
 
     //This controller method is called when the request pattern is of type 'users/registration' and also the incoming request is of POST type
     //This method calls the business logic and after the user record is persisted in the database, directs to login page
+    //if the password satisfies the constraints of being strong else redirects to registration page
     @RequestMapping(value = "users/registration", method = RequestMethod.POST)
-    public String registerUser(User user) {
-        userService.registerUser(user);
-        return "redirect:/users/login";
+    public String registerUser(User user,Model model) {
+
+        char password[] = user.getPassword().toCharArray();
+        if(isValidPassword(password))
+        {
+            userService.registerUser(user);
+            return "redirect:/users/login";
+        }
+        else
+        {
+            String error = "Password must contain atleast 1 alphabet, 1 number & 1 special character";
+            User u = new User();
+            UserProfile profile = new UserProfile();
+            u.setProfile(profile);
+            model.addAttribute("User",u);
+            model.addAttribute("passwordTypeError",error);
+            return "users/registration";
+        }
+    }
+
+    //This method verifies if the password match all the criteria of being strong
+    private boolean isValidPassword(char pwd[])
+    {
+        if(pwd.length <= 2)
+            return false;
+        boolean containsNumber = false;
+        boolean containsSpecialChar = false;
+        boolean containsAlphabet = false;
+        for(int i=0;i<pwd.length;i++)
+        {
+            if((pwd[i] >= 'a' && pwd[i] <= 'z') || (pwd[i] >= 'A' && pwd[i] <= 'Z'))
+            {
+                containsAlphabet = true;
+                break;
+            }
+        }
+        for(int i=0;i<pwd.length;i++)
+        {
+            if((pwd[i] >= '0' && pwd[i] <= '9'))
+            {
+                containsNumber = true;
+                break;
+            }
+        }
+        for(int i=0;i<pwd.length;i++)
+        {
+            if(!(pwd[i] >= '0' && pwd[i] <= '9') && !((pwd[i] >= 'a' && pwd[i] <= 'z') || (pwd[i] >= 'A' && pwd[i] <= 'Z')))
+            {
+                containsSpecialChar = true;
+                break;
+            }
+        }
+        return containsAlphabet && containsNumber && containsSpecialChar;
     }
 
     //This controller method is called when the request pattern is of type 'users/login'
