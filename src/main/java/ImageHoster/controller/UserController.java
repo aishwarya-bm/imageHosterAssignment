@@ -47,15 +47,12 @@ public class UserController {
         if(isValidPassword(password))
         {
             userService.registerUser(user);
-            return "redirect:/users/login";
+            return "users/login";
         }
         else
         {
             String error = "Password must contain atleast 1 alphabet, 1 number & 1 special character";
-            User u = new User();
-            UserProfile profile = new UserProfile();
-            u.setProfile(profile);
-            model.addAttribute("User",u);
+            model.addAttribute("User",user);
             model.addAttribute("passwordTypeError",error);
             return "users/registration";
         }

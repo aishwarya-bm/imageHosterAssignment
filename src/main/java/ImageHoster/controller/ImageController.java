@@ -1,5 +1,6 @@
 package ImageHoster.controller;
 
+import ImageHoster.model.Comment;
 import ImageHoster.model.Image;
 import ImageHoster.model.Tag;
 import ImageHoster.model.User;
@@ -47,12 +48,15 @@ public class ImageController {
     //this list is then sent to 'images/image.html' file and the tags are displayed
 
     //Modified the method to get image details using image id instead of title as id remains unique unlike title
+    //also comments are  shown
     @RequestMapping("/images/{imageId}/{title}")
     public String showImage(@PathVariable("imageId") Integer imageId,@PathVariable("title") String title, Model model) {
         //Image image = imageService.getImageByTitle(title);
         Image image = imageService.getImageById(imageId);
+        List<Comment> comments = image.getComments();
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
+        model.addAttribute("comments",comments);
         return "images/image";
     }
 
@@ -101,15 +105,19 @@ public class ImageController {
         User user = (User) session.getAttribute("loggeduser");
         model.addAttribute("image", image);
         String tags = convertTagsToString(image.getTags());
-        model.addAttribute("tags", tags);
 
         if(user.getId() == image.getUser().getId())
+        {
+            model.addAttribute("tags", tags);
             return "images/edit";
+        }
         else
         {
             String error = "Only the owner of the image can edit the image";
             List<Tag> tagList = findOrCreateTags(tags);
+            List<Comment> comments = image.getComments();
             model.addAttribute("tags",tagList);
+            model.addAttribute("comments",comments);
             model.addAttribute("editError",error);
             return "images/image";
         }
@@ -153,6 +161,7 @@ public class ImageController {
     //This controller method is called when the request pattern is of type 'deleteImage' and also the incoming request is of DELETE type
     //The method calls the deleteImage() method in the business logic passing the id of the image to be deleted
     //The method makes sure to allow only the user to delete the images  and redirects accordingly
+    //Added functionality to show comments
     @RequestMapping(value = "/deleteImage", method = RequestMethod.DELETE)
     public String deleteImageSubmit(@RequestParam(name = "imageId") Integer imageId,Model model,HttpSession session) {
         Image image = imageService.getImage(imageId);
@@ -168,8 +177,10 @@ public class ImageController {
         {
             String error = "Only the owner of the image can delete the image";
             List<Tag> tagList = findOrCreateTags(tags);
+            List<Comment> comments = image.getComments();
             model.addAttribute("image",image);
             model.addAttribute("tags",tagList);
+            model.addAttribute("comments",comments);
             model.addAttribute("deleteError",error);
             return "images/image";
         }
