@@ -52,7 +52,7 @@ public class ImageController {
     @RequestMapping("/images/{imageId}/{title}")
     public String showImage(@PathVariable("imageId") Integer imageId,@PathVariable("title") String title, Model model) {
         //Image image = imageService.getImageByTitle(title);
-        Image image = imageService.getImageById(imageId);
+        Image image = imageService.getImage(imageId);
         List<Comment> comments = image.getComments();
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
