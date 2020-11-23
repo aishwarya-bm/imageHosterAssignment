@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-//@ComponentScan("ImageHoster.service")
-//@ComponentScan("ImageHoster.repository")
 public class CommentController {
 
     @Autowired
@@ -32,6 +30,8 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    //This controller method is called when the request pattern is of type '/image/{imageId}/{imageTitle}/comments'
+    //The method redirects to the image to which comment is added
     @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments",method = RequestMethod.POST)
     public String createComment(@PathVariable("imageId") Integer imageId, @PathVariable("imageTitle") String imageTitle, Comment comment, HttpSession session)
     {

@@ -11,6 +11,7 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
+    //The method calls the createComment() method in the Repository and passes the comment to be persisted in the database
     public Comment createComment(Comment comment)
     {
         return commentRepository.createComment(comment);
