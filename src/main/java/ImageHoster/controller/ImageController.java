@@ -114,7 +114,7 @@ public class ImageController {
         else
         {
             String error = "Only the owner of the image can edit the image";
-            List<Tag> tagList = findOrCreateTags(tags);
+            List<Tag> tagList = image.getTags();
             List<Comment> comments = image.getComments();
             model.addAttribute("tags",tagList);
             model.addAttribute("comments",comments);
@@ -176,7 +176,7 @@ public class ImageController {
         else
         {
             String error = "Only the owner of the image can delete the image";
-            List<Tag> tagList = findOrCreateTags(tags);
+            List<Tag> tagList = image.getTags();
             List<Comment> comments = image.getComments();
             model.addAttribute("image",image);
             model.addAttribute("tags",tagList);

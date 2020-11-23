@@ -90,15 +90,15 @@ public class ImageControllerTest {
         tags.add(tag);
         image.setTags(tags);
 
-        List<Comment> commentList = new ArrayList<>();
-        Comment c = new Comment();
-        c.setId(1);
-        c.setText("");
-        c.setUser(user);
-        c.setImage(image);
-        commentList.add(c);
-
-        image.setComments(commentList);
+//        List<Comment> commentList = new ArrayList<>();
+//        Comment c = new Comment();
+//        c.setId(1);
+//        c.setText("");
+//        c.setUser(user);
+//        c.setImage(image);
+//        commentList.add(c);
+//
+//        image.setComments(commentList);
 
         Mockito.when(imageService.getImage(Mockito.anyInt())).thenReturn(image);
 
@@ -225,13 +225,13 @@ public class ImageControllerTest {
         User user1 = new User();
         UserProfile userProfile1 = new UserProfile();
         userProfile.setId(2);
-        userProfile.setEmailAddress("p@gmail.com");
-        userProfile.setFullName("Prerna");
-        userProfile.setMobileNumber("9876543210");
-        user.setProfile(userProfile1);
-        user.setId(2);
-        user.setUsername("Prerna");
-        user.setPassword("password1@@");
+        userProfile1.setEmailAddress("p@gmail.com");
+        userProfile1.setFullName("Prerna");
+        userProfile1.setMobileNumber("9876543210");
+        user1.setProfile(userProfile1);
+        user1.setId(2);
+        user1.setUsername("Prerna");
+        user1.setPassword("password1@@");
 
         Image image = new Image();
         image.setId(1);
@@ -313,14 +313,14 @@ public class ImageControllerTest {
 
         User user1 = new User();
         UserProfile userProfile1 = new UserProfile();
-        userProfile.setId(2);
-        userProfile.setEmailAddress("p@gmail.com");
-        userProfile.setFullName("Prerna");
-        userProfile.setMobileNumber("9876543210");
-        user.setProfile(userProfile1);
-        user.setId(2);
-        user.setUsername("Prerna");
-        user.setPassword("password1@@");
+        userProfile1.setId(2);
+        userProfile1.setEmailAddress("p@gmail.com");
+        userProfile1.setFullName("Prerna");
+        userProfile1.setMobileNumber("9876543210");
+        user1.setProfile(userProfile1);
+        user1.setId(2);
+        user1.setUsername("Prerna");
+        user1.setPassword("password1@@");
 
         Image image = new Image();
         image.setId(1);
